@@ -1,7 +1,6 @@
 <?php
 namespace Taro\Middlewares;
 
-use PHPUnit\Framework\Constraint\Callback;
 use Taro\Middleware\BaseMiddleware;
 
 class FirstMiddleware extends BaseMiddleware

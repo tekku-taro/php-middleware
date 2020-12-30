@@ -2,6 +2,8 @@
 /**
  * Middleware Library
  *
+ * Middlewareクラスを登録し、アクションの前後で実行するクラス
+ *
  * routing処理の際などに、アクションの前後で実行したい処理を
  * 登録できるライブラリです。
  *
@@ -9,6 +11,8 @@
  */
 
 namespace Taro\Middleware;
+
+use Closure;
 
 class MiddlewareHandler
 {
@@ -20,12 +24,24 @@ class MiddlewareHandler
         $this->first = $this->createCoreFunction();
     }
 
+    /**
+     * ミドルウェアを登録
+     *
+     * @param BaseMiddleware $middleware
+     * @return void
+     */
     public function add(BaseMiddleware $middleware)
     {
         $next = $this->first;
         $this->first = $this->createMiddlewareFunction($middleware, $next);
     }
 
+    /**
+     * ミドルウェアの配列を登録
+     *
+     * @param array $middlewares
+     * @return void
+     */
     public function stackList(array $middlewares)
     {
         $middlewares = array_reverse($middlewares);
@@ -37,6 +53,12 @@ class MiddlewareHandler
         }
     }
     
+    /**
+     * アクションを実行する関数を作成
+     * TODO 実際の利用に合わせて内容を編集
+     *
+     * @return Closure
+     */
     protected function createCoreFunction()
     {
         return function ($coreAction) {
@@ -44,6 +66,11 @@ class MiddlewareHandler
         };
     }
     
+    /**
+     * ミドルウェアを実行する関数を作成
+     *
+     * @return Closure
+     */
     protected function createMiddlewareFunction($middleware, $next)
     {
         return function ($coreAction) use ($middleware,$next) {
@@ -51,6 +78,12 @@ class MiddlewareHandler
         };
     }
 
+    /**
+     * アクションと登録したミドルウェアの実行
+     *
+     * @param mixed $coreAction
+     * @return mixed
+     */
     public function handle($coreAction)
     {
         return call_user_func($this->first, $coreAction);

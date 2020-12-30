@@ -3,10 +3,18 @@ namespace Taro;
 
 use Taro\Middleware\MiddlewareHandler;
 
+/**
+ * ミドルウェアを呼び出すアプリケーションクラスの例
+ */
 class Application
 {
     protected $middlewareHandler;
     
+    /**
+     * 登録したいミドルウェアクラスを配列に格納
+     *
+     * @var array
+     */
     public $middlewares = [
         \Taro\Middlewares\FirstMiddleware::class,
         \Taro\Middlewares\SecondMiddleware::class,
