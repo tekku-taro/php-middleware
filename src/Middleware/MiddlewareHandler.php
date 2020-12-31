@@ -39,7 +39,7 @@ class MiddlewareHandler
     /**
      * ミドルウェアの配列を登録
      *
-     * @param array $middlewares
+     * @param BaseMiddleware[] $middlewares
      * @return void
      */
     public function stackList(array $middlewares)
@@ -69,9 +69,11 @@ class MiddlewareHandler
     /**
      * ミドルウェアを実行する関数を作成
      *
+     * @param BaseMiddleware $middleware
+     * @param Closure $next
      * @return Closure
      */
-    protected function createMiddlewareFunction($middleware, $next)
+    protected function createMiddlewareFunction($middleware, Closure $next)
     {
         return function ($coreAction) use ($middleware,$next) {
             return $middleware->handle($coreAction, $next);

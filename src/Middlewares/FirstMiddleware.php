@@ -10,7 +10,7 @@ class FirstMiddleware extends BaseMiddleware
         $coreAction->list[] = 1;
     }
     
-    public function after($coreAction)
+    public function after($coreAction, $response)
     {
         $coreAction->list[] = 3;
     }

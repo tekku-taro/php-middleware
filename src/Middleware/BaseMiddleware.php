@@ -20,7 +20,7 @@ abstract class BaseMiddleware
     {
         $this->before($coreAction);
         $response = $next($coreAction);
-        $this->after($coreAction);
+        $this->after($coreAction, $response);
         
         return $response;
     }
@@ -39,9 +39,10 @@ abstract class BaseMiddleware
      * アクション実行後に実行する処理
      *
      * @param mixed $coreAction
+     * @param mixed $response
      * @return void
      */
-    public function after($coreAction)
+    public function after($coreAction, $response)
     {
     }
 }
